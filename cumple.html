@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Escapada de cumple 🎂🏔️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Paleta cálida: beige + terracota + toques vino */
+      --bg-body: #f3e7dc;         /* fondo general muy claro */
+      --bg-card: #fef8f3;         /* tarjeta principal */
+      --bg-card-soft: #f7ece3;    /* tarjetas de opciones */
+      --border-subtle: #e0c8b5;
+      --accent: #c95335;          /* terracota */
+      --accent-soft: #f2b9a1;
+      --text-main: #3b2330;       /* marrón vino suave */
+      --text-soft: #7a5a52;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Poppins", system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: radial-gradient(circle at top, #fbe4cf 0, var(--bg-body) 55%, #ecd7c4 100%);
+      color: var(--text-main);
+    }
+    .game {
+      width: 100%;
+      max-width: 880px;
+      padding: 32px 28px 28px;
+      background: linear-gradient(145deg, #fff9f4, #f6e7dc);
+      border-radius: 32px;
+      box-shadow: 0 20px 70px rgba(107, 70, 52, 0.25);
+      border: 1px solid rgba(214, 180, 155, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+    .badge-top {
+      position: absolute;
+      right: 22px;
+      top: 22px;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(214, 180, 155, 0.9);
+      background: rgba(255, 248, 240, 0.9);
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-top span:first-child {
+      font-size: 1rem;
+    }
+    h1 {
+      font-size: 2.1rem;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: var(--text-soft);
+      margin-bottom: 20px;
+    }
+
+    #intro {
+      margin-top: 10px;
+    }
+    .intro-card {
+      padding: 24px 20px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), #fbe7da);
+      border: 1px solid rgba(228, 196, 170, 0.9);
+      margin-bottom: 20px;
+    }
+    .intro-text-soft {
+      font-size: 1rem;
+      color: var(--text-soft);
+    }
+
+    .intro-highlight {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      padding: 10px 12px;
+      border-radius: 18px;
+      background: rgba(250, 235, 221, 0.9);
+      border: 1px dashed rgba(214, 162, 132, 0.9);
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn {
+      border-radius: 999px;
+      padding: 10px 20px;
+      border: 1px solid rgba(199, 148, 123, 0.9);
+      background: transparent;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.14s ease, border-color 0.14s ease, transform 0.12s ease;
+    }
+    .btn-primary {
+      border-color: var(--accent);
+      background: rgba(201, 83, 53, 0.08);
+    }
+    .btn:hover {
+      background: rgba(201, 83, 53, 0.12);
+      transform: translateY(-1px);
+    }
+
+    #qa {
+      margin-top: 10px;
+    }
+    .question {
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+    .option-card {
+      background: var(--bg-card-soft);
+      border-radius: 22px;
+      border: 1px solid var(--border-subtle);
+      padding: 12px;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(120, 78, 62, 0.25);
+      border-color: var(--accent);
+      background: #fdf4ee;
+    }
+    .option-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 15px;
+      object-fit: cover;
+      margin-bottom: 12px;
+      background: #e8d1c0;
+    }
+    .option-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+    .option-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .progress {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    .hidden { display: none; }
+
+    .result-title {
+      font-size: 1.7rem;
+      margin-bottom: 12px;
+    }
+    .result-image {
+      width: 100%;
+      border-radius: 24px;
+      margin-bottom: 14px;
+      object-fit: cover;
+      aspect-ratio: 16 / 9;
+      background: #e7d0c1;
+    }
+    .result-text {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    .result-extra {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(214, 162, 132, 0.9);
+      margin-bottom: 10px;
+      gap: 6px;
+      background: rgba(255, 248, 240, 0.95);
+      color: var(--text-main);
+    }
+
+    @media (max-width: 640px) {
+      .game { padding: 22px 18px; border-radius: 24px; }
+      h1 { font-size: 1.7rem; }
+      .badge-top { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <div class="badge-top"><span>🎂</span><span>Test de escapada de cumple</span></div>
+    <h1>Escapada de cumpleaños</h1>
+    <p class="subtitle">Elige lo que te apetezca de verdad, yo me encargo de organizarlo. Pide por esa boquita.</p>
+
+    <div id="intro">
+      <div class="intro-card">
+        <p class="intro-text-soft">
+          En cada pantalla verás dos opciones. Elige la que te llame más, sin darle muchas vueltas.
+        </p>
+        <div class="intro-highlight">
+          Pista: todas las opciones llevan a un plan cómodo, con cama y comida rica y poco sufrir. Prometido.
+        </div>
+        <div class="button-row">
+          <button class="btn" onclick="skipIntro()">No gracias, prefiero no divertirme 😒</button>
+          <button class="btn btn-primary" onclick="startGame()">WAO, vamos allá 🤩</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="qa" class="hidden">
+      <div id="question" class="question"></div>
+      <div id="options" class="options"></div>
+      <div id="progress" class="progress"></div>
+    </div>
+
+    <div id="result" class="hidden">
+      <div class="pill"><span>✨</span><span>Resultado de tus elecciones</span></div>
+      <h2 id="result-title" class="result-title"></h2>
+      <img id="result-image" class="result-image" alt="Destino sorpresa" />
+      <p id="result-text" class="result-text"></p>
+      <p id="result-extra" class="result-extra"></p>
+
+      <div class="button-row">
+        <button class="btn" onclick="restartGame()">Volver a empezar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const destinations = {
+      andorraSpa: {
+        name: "Hotel spa en Andorra",
+        image: "https://via.placeholder.com/800x450?text=Andorra+Spa",
+        text: "Montaña, ambiente invernal visto desde un hotel muy cómodo, con spa para reventar de gusto.",
+        extra: "Paseos suaves, telecabina si apetece, y luego manta, cama y desayuno obscenamente rico."
+      },
+      pirineoRural: {
+        name: "Casa rural moderna en el Pirineo",
+        image: "https://via.placeholder.com/800x450?text=Pirineo+Rural+Moderno",
+        text: "Montaña verde, pueblos bonitos y ritmo tranquilo, sin necesidad de hacer grandes caminatas.",
+        extra: "Día de paseos suaves, cafés largos y volver a un caserón cómodo con buenas vistas."
+      },
+      asturiasBoutique: {
+        name: "Hotel boutique en Asturias",
+        image: "https://via.placeholder.com/800x450?text=Asturias+Boutique",
+        text: "Valles suaves y verdes, niebla bonita, mar no muy lejos y refugio acogedor al final del día.",
+        extra: "Plan de conducir poco, comer muy bien y refugiarnos en un sitio con encanto."
+      }
+    };
+
+    const questions = [
+      {
+        id: "paisaje",
+        text: "Para esta escapada, ¿qué paisaje te atrae más ahora mismo?",
+        options: [
+          {
+            value: "verde",
+            title: "Montaña verde y valles suaves",
+            description: "Verde, humedad, niebla bonita y sensación de refugio.",
+            image: "https://via.placeholder.com/600x400?text=Montana+Verde"
+          },
+          {
+            value: "nieve",
+            title: "Montaña con algo de nieve",
+            description: "Ambiente invernal, pero sin carreras ni esquís obligatorios.",
+            image: "https://via.placeholder.com/600x400?text=Montana+Nevada"
+          }
+        ]
+      },
+      {
+        id: "actividad",
+        text: "En ese lugar, ¿qué tipo de plan suena más a 'cumple perfecto'?",
+        options: [
+          {
+            value: "paseosSuaves",
+            title: "Paseos suaves + explorar pueblos",
+            description: "Moverse un poco, ver sitios bonitos, pero sin llegar reventados.",
+            image: "https://via.placeholder.com/600x400?text=Paseos+Pueblos"
+          },
+          {
+            value: "spaHotel",
+            title: "Mucho hotel, spa y cama",
+            description: "Salir lo justo y centrarse en descansar, comer y flotar en el agua.",
+            image: "https://via.placeholder.com/600x400?text=Spa+Hotel"
+          }
+        ]
+      },
+      {
+        id: "hotel",
+        text: "¿Qué estilo de alojamiento te apetece más?",
+        options: [
+          {
+            value: "ruralModerno",
+            title: "Rural moderno con encanto",
+            description: "Piedra y madera, chimenea si puede ser, pero todo muy cómodo.",
+            image: "https://via.placeholder.com/600x400?text=Rural+Moderno"
+          },
+          {
+            value: "hotelazoSpa",
+            title: "Hotelazo con buen spa",
+            description: "Más rollo resort, todo a mano, bajar en albornoz y listo.",
+            image: "https://via.placeholder.com/600x400?text=Hotel+Spa"
+          }
+        ]
+      }
+    ];
+
+    let currentIndex = 0;
+    const answers = {};
+
+    function skipIntro() { startGame(); }
+
+    function startGame() {
+      document.getElementById("intro").classList.add("hidden");
+      document.getElementById("qa").classList.remove("hidden");
+      currentIndex = 0;
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentIndex];
+      if (!q) return showResult();
+
+      document.getElementById("question").textContent = q.text;
+      const optionsEl = document.getElementById("options");
+      optionsEl.innerHTML = "";
+
+      q.options.forEach(o => {
+        const card = document.createElement("div");
+        card.className = "option-card";
+        card.innerHTML = `
+          <img src="${o.image}" class="option-image" alt=""/>
+          <div class="option-title">${o.title}</div>
+          <div class="option-text">${o.description}</div>
+        `;
+        card.onclick = () => {
+          answers[q.id] = o.value;
+          currentIndex++;
+          renderQuestion();
+        };
+        optionsEl.appendChild(card);
+      });
+
+      document.getElementById("progress").textContent =
+        `Pregunta ${currentIndex + 1} de ${questions.length}`;
+    }
+
+    function chooseDestination() {
+      const { paisaje, actividad, hotel } = answers;
+      if (paisaje === "nieve" && hotel === "hotelazoSpa") return destinations.andorraSpa;
+      if (paisaje === "verde" && actividad === "paseosSuaves") return destinations.pirineoRural;
+      return destinations.asturiasBoutique;
+    }
+
+    function showResult() {
+      const dest = chooseDestination();
+      document.getElementById("qa").classList.add("hidden");
+      document.getElementById("result").classList.remove("hidden");
+      document.getElementById("result-title").textContent = dest.name;
+      document.getElementById("result-image").src = dest.image;
+      document.getElementById("result-text").textContent = dest.text;
+      document.getElementById("result-extra").textContent = dest.extra;
+    }
+
+    function restartGame() {
+      for (const key in answers) delete answers[key];
+      document.getElementById("result").classList.add("hidden");
+      document.getElementById("intro").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
